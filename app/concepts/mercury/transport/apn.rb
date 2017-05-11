@@ -5,7 +5,7 @@ module Mercury
     class APN < Base
       step :deliver!
 
-      def deliver!(options)
+      def deliver!(_options)
         true
       end
     end

@@ -6,6 +6,7 @@ gem 'rails', '~> 5.1.0'
 
 # ActiveRecord
 gem 'pg'
+gem 'enumerize'
 
 # Orchestration
 gem 'puma'
