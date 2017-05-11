@@ -28,7 +28,9 @@ module API
             required(:recipient_id).filled
             required(:text).filled
             required(:transports).filled do
-              min_size?(1) & each { included_in?(Mercury::Notification::Deliver::TRANSPORTS) }
+              min_size?(1) & each {
+                included_in?(Mercury::Notification::Deliver['transports.map'].keys)
+              }
             end
             optional(:meta).maybe(:hash?)
 

@@ -7,8 +7,8 @@ module API
         class Create < Pragma::Operation::Create
           step :deliver!
 
-          def deliver!(options)
-            Mercury::Notification::Deliver.call('notification' => options['model'])
+          def deliver!(model:, **)
+            Mercury::Notification::Deliver.call(notification: model)
           end
         end
       end

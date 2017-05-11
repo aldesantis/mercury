@@ -5,6 +5,6 @@ FactoryGirl.define do
     association :recipient, factory: :profile_group
     text { Faker::Lorem.sentence }
     meta { {} }
-    transports { [Mercury::Notification::Deliver::TRANSPORTS.sample] }
+    transports { [Mercury::Notification::Deliver.skills['transports.map'].keys.sample] }
   end
 end
