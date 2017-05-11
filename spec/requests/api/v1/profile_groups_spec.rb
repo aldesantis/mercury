@@ -101,6 +101,25 @@ RSpec.describe '/api/v1/profile-groups' do
       subject.call
       expect(parsed_response).to match(a_hash_including(new_profile_group.stringify_keys))
     end
+
+    context 'when an existing name is used' do
+      let!(:existing_profile_group) { create(:profile_group) }
+      let(:new_profile_group) { attributes_for(:profile_group, name: existing_profile_group.name) }
+
+      it 'responds with 422 Unprocessable Entity' do
+        subject.call
+        expect(last_response.status).to eq(422)
+      end
+
+      it 'does not update the profile group' do
+        expect(subject).not_to change(profile_group, :name)
+      end
+
+      it 'responds with the validation error' do
+        subject.call
+        expect(parsed_response['meta']['errors']).to have_key('unique_name')
+      end
+    end
   end
 
   describe 'DELETE /:id' do
