@@ -3,4 +3,5 @@
 class ProfileGroup < ApplicationRecord
   has_many :memberships, inverse_of: :profile_group
   has_many :profiles, through: :memberships
+  has_many :notifications, as: :recipient
 end
