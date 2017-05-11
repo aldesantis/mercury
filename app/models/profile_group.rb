@@ -1,0 +1,2 @@
+class ProfileGroup < ApplicationRecord
+end
