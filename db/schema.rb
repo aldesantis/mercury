@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511073337) do
+ActiveRecord::Schema.define(version: 20170511084421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 20170511073337) do
     t.uuid "profile_id", null: false
     t.uuid "profile_group_id", null: false
     t.index ["profile_id", "profile_group_id"], name: "index_memberships_on_profile_id_and_profile_group_id", unique: true
+  end
+
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "recipient_type", null: false
+    t.uuid "recipient_id", null: false
+    t.string "text", null: false
+    t.json "meta", default: "{}", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
   end
 
   create_table "profile_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
