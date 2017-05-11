@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20170511070215) do
     t.index ["name"], name: "index_profile_groups_on_name", unique: true
   end
 
-  create_table "profiles", force: :cascade do |t|
+  create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

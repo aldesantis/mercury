@@ -1,6 +1,6 @@
 class CreateProfiles < ActiveRecord::Migration[5.1]
   def change
-    create_table :profiles do |t|
+    create_table :profiles, id: :uuid do |t|
       t.string :name, null: false
       t.timestamps null: false
     end
