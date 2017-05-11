@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe '/api/v1/profiles' do
   describe 'GET /' do
     subject { -> { get api_v1_profiles_path } }

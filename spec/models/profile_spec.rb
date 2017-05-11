@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Profile do
   subject { build_stubbed(:profile) }
 
