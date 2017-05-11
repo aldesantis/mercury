@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :device do
     association :profile
     type { Device.type.values.sample }
-    source { { udid: SecureRandom.uuid } }
+    source { { 'udid' => SecureRandom.uuid } }
   end
 end
