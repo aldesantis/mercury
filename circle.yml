@@ -1,0 +1,24 @@
+machine:
+  ruby:
+    version:
+      2.4.0
+
+deployment:
+  dev:
+    branch: deploy/dev
+    heroku:
+      appname: b911-mercury-dev
+
+  staging:
+    branch: deploy/staging
+    heroku:
+      appname: b911-mercury-staging
+
+  production:
+    branch: deploy/production
+    heroku:
+      appname: b911-mercury-production
+
+test:
+  override:
+    - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format progress --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml --require rails_helper

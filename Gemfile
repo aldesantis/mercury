@@ -72,4 +72,7 @@ group :test do
   gem 'fuubar'
   gem 'shoulda-matchers'
   gem 'webmock'
+
+  # CircleCI
+  gem 'rspec_junit_formatter'
 end
