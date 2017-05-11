@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511102240) do
+ActiveRecord::Schema.define(version: 20170511115353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "devices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.string "type", null: false
+    t.json "source", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "profile_id", null: false
@@ -104,6 +112,7 @@ ActiveRecord::Schema.define(version: 20170511102240) do
     t.index ["delivered", "failed"], name: "index_rpush_notifications_multi", where: "((NOT delivered) AND (NOT failed))"
   end
 
+  add_foreign_key "devices", "profiles", on_delete: :cascade
   add_foreign_key "memberships", "profile_groups", on_delete: :cascade
   add_foreign_key "memberships", "profiles", on_delete: :cascade
 end
