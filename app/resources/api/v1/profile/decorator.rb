@@ -9,8 +9,13 @@ module API
 
         property :id
         property :name
+        property :profile_groups, exec_context: :decorator
         timestamp :created_at
         timestamp :updated_at
+
+        def profile_groups
+          represented.profile_groups.pluck(:id)
+        end
       end
     end
   end

@@ -12,7 +12,7 @@ module API
               def self.messages
                 super.merge(en: {
                   errors: {
-                    unique_name: 'name is not unique'
+                    unique_name: 'name must be unique'
                   }
                 })
               end
