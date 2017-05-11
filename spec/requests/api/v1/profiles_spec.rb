@@ -120,6 +120,54 @@ RSpec.describe '/api/v1/profiles' do
         expect(parsed_response['meta']['errors']).to have_key('unique_name')
       end
     end
+
+    context 'when valid profile groups are passed' do
+      let!(:profile_group) { create(:profile_group) }
+
+      let(:new_profile) do
+        { profile_groups: [profile_group.id] }
+      end
+
+      it 'responds with 200 OK' do
+        subject.call
+        expect(last_response.status).to eq(200)
+      end
+
+      it 'updates the profile' do
+        subject.call
+        expect(profile.profile_groups.pluck(:id)).to eq(new_profile[:profile_groups])
+      end
+
+      it 'responds with the updated profile' do
+        subject.call
+        expect(parsed_response).to match(a_hash_including(new_profile.stringify_keys))
+      end
+    end
+
+    context 'when invalid profile groups are passed' do
+      let!(:profile_group) { create(:profile_group) }
+
+      let(:new_profile) do
+        { profile_groups: [profile_group.id, 'blabla'] }
+      end
+
+      it 'responds with 422 Unprocessable Entity' do
+        subject.call
+        expect(last_response.status).to eq(422)
+      end
+
+      it 'does not update the profile' do
+        expect(subject).not_to change(profile.profile_groups, :count)
+      end
+
+      it 'responds with the validation error' do
+        subject.call
+        expect(parsed_response['meta']['errors']['profile_groups'].first).to match_array([
+          1,
+          ['must be a valid profile group ID']
+        ])
+      end
+    end
   end
 
   describe 'DELETE /:id' do

@@ -10,11 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511070215) do
+ActiveRecord::Schema.define(version: 20170511073337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.uuid "profile_group_id", null: false
+    t.index ["profile_id", "profile_group_id"], name: "index_memberships_on_profile_id_and_profile_group_id", unique: true
+  end
 
   create_table "profile_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -28,4 +34,6 @@ ActiveRecord::Schema.define(version: 20170511070215) do
     t.index ["name"], name: "index_profiles_on_name", unique: true
   end
 
+  add_foreign_key "memberships", "profile_groups", on_delete: :cascade
+  add_foreign_key "memberships", "profiles", on_delete: :cascade
 end
