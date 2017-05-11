@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/pragmarb/pragma.git
-  revision: 9ef2301390c06537809baf3170db141b67c2a2e5
+  revision: 11ba9cccffad3d10d0338ff402f4657d4bd26476
   specs:
     pragma (2.0.0)
       pragma-contract (~> 2.0)
@@ -91,6 +91,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
+    ansi (1.5.0)
     arel (8.0.0)
     ast (2.3.0)
     bugsnag (5.3.2)
@@ -185,6 +186,8 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.2)
     multi_json (1.12.1)
+    net-http-persistent (3.0.0)
+      connection_pool (~> 2.2)
     nio4r (2.0.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
@@ -255,6 +258,13 @@ GEM
       uber (< 0.2.0)
     roar (1.1.0)
       representable (~> 3.0.0)
+    rpush (2.7.0)
+      activesupport
+      ansi
+      multi_json (~> 1.0)
+      net-http-persistent
+      railties
+      thor (>= 0.18.1, < 2.0)
     rspec-core (3.6.0)
       rspec-support (~> 3.6.0)
     rspec-expectations (3.6.0)
@@ -356,6 +366,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.1.0)
   rails_12factor
+  rpush
   rspec-rails
   rubocop
   rubocop-rspec

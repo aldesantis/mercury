@@ -30,6 +30,9 @@ gem 'clockwork'
 # Error reporting
 gem 'bugsnag'
 
+# Push notifications
+gem 'rpush'
+
 group :production do
   # Heroku
   gem 'rails_12factor'
