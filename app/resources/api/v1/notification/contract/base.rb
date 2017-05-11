@@ -8,6 +8,7 @@ module API
           property :recipient_type
           property :recipient_id
           property :text
+          property :transports
           property :meta
 
           validation do
@@ -26,6 +27,9 @@ module API
             required(:recipient_type).filled(included_in?: %w[Profile ProfileGroup])
             required(:recipient_id).filled
             required(:text).filled
+            required(:transports).filled do
+              min_size?(1) & each { included_in?(Mercury::Notification::Deliver::TRANSPORTS) }
+            end
             optional(:meta).maybe(:hash?)
 
             validate(recipient_id: %i[

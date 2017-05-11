@@ -12,6 +12,7 @@ module API
         property :recipient_id
         property :text
         property :meta
+        property :transports
         timestamp :created_at
         timestamp :updated_at
 
