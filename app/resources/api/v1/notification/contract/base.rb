@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module API
   module V1
     module Notification
@@ -21,12 +23,15 @@ module API
               predicates API::V1::Common::Contract::Predicates
             end
 
-            required(:recipient_type).filled(included_in?: %w(Profile ProfileGroup))
+            required(:recipient_type).filled(included_in?: %w[Profile ProfileGroup])
             required(:recipient_id).filled
             required(:text).filled
             optional(:meta).maybe(:hash?)
 
-            validate(recipient_id: [:recipient_type, :recipient_id]) do |recipient_type, recipient_id|
+            validate(recipient_id: %i[
+              recipient_type
+              recipient_id
+            ]) do |recipient_type, recipient_id|
               "::#{recipient_type}".constantize.exists?(id: recipient_id)
             end
           end

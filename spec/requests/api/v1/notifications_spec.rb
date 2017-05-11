@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe '/api/v1/notifications' do
   describe 'GET /' do
     subject { -> { get api_v1_notifications_path } }
@@ -103,7 +105,9 @@ RSpec.describe '/api/v1/notifications' do
 
       it 'responds with the validation error' do
         subject.call
-        expect(parsed_response['meta']['errors']['recipient_id']).to include('must be a valid recipient ID')
+        expect(parsed_response['meta']['errors']['recipient_id']).to include(
+          'must be a valid recipient ID'
+        )
       end
     end
   end
