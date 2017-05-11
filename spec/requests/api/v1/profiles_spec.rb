@@ -55,25 +55,6 @@ RSpec.describe '/api/v1/profiles' do
       subject.call
       expect(parsed_response).to match(a_hash_including(profile.stringify_keys))
     end
-
-    context 'when an existing name is used' do
-      let!(:existing_profile) { create(:profile) }
-      let(:profile) { attributes_for(:profile, name: existing_profile.name) }
-
-      it 'responds with 422 Unprocessable Entity' do
-        subject.call
-        expect(last_response.status).to eq(422)
-      end
-
-      it 'does not create a new profile group' do
-        expect(subject).not_to change(ProfileGroup, :count)
-      end
-
-      it 'responds with the validation error' do
-        subject.call
-        expect(parsed_response['meta']['errors']).to have_key('unique_name')
-      end
-    end
   end
 
   describe 'PATCH /:id' do
@@ -117,7 +98,7 @@ RSpec.describe '/api/v1/profiles' do
 
       it 'responds with the validation error' do
         subject.call
-        expect(parsed_response['meta']['errors']).to have_key('unique_name')
+        expect(parsed_response['meta']['errors']['name']).to include('must be unique')
       end
     end
 

@@ -12,23 +12,21 @@ module API
               def self.messages
                 super.merge(en: {
                   errors: {
-                    unique_name: 'name must be unique'
+                    unique_name?: 'must be unique'
                   }
                 })
               end
-            end
 
-            required(:name).filled
+              option :form
 
-            validate(unique_name: [:name]) do |name|
-              scope = if options[:form].model.persisted?
-                ::ProfileGroup.where('id <> ?', options[:form].model.id)
-              else
-                ::ProfileGroup.all
+              predicates API::V1::Common::Contract::Predicates
+
+              def unique_name?(value)
+                predicates[:unique?].call(form, ::ProfileGroup, :name, value)
               end
-
-              !scope.exists?(name: name)
             end
+
+            required(:name).filled { unique_name? }
           end
         end
       end

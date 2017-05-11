@@ -13,29 +13,27 @@ module API
               def self.messages
                 super.merge(en: {
                   errors: {
-                    unique_name: 'name must be unique',
+                    unique_name?: 'must be unique',
                     profile_group?: 'must be a valid profile group ID'
                   }
                 })
               end
 
+              option :form
+
+              predicates API::V1::Common::Contract::Predicates
+
+              def unique_name?(value)
+                predicates[:unique?].call(form, ::Profile, :name, value)
+              end
+
               def profile_group?(value)
-                value.is_a?(::ProfileGroup)
+                predicates[:instance_of?].call(::ProfileGroup, value)
               end
             end
 
-            required(:name).filled
+            required(:name).filled { unique_name? }
             optional(:profile_groups).maybe { each { profile_group? } }
-
-            validate(unique_name: [:name]) do |name|
-              scope = if options[:form].model.persisted?
-                ::Profile.where('id <> ?', options[:form].model.id)
-              else
-                ::Profile.all
-              end
-
-              !scope.exists?(name: name)
-            end
           end
 
           def initialize(*)
