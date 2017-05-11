@@ -5,17 +5,17 @@ machine:
 
 deployment:
   dev:
-    branch: deploy/dev
+    branch: develop
     heroku:
       appname: b911-mercury-dev
 
   staging:
-    branch: deploy/staging
+    branch: staging
     heroku:
       appname: b911-mercury-staging
 
   production:
-    branch: deploy/production
+    branch: production
     heroku:
       appname: b911-mercury-production
 
