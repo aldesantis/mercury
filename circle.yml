@@ -19,6 +19,10 @@ deployment:
     heroku:
       appname: b911-mercury-production
 
+database:
+  pre:
+    - cp config/application.example.yml config/application.yml
+
 test:
   override:
     - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format progress --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml --require rails_helper
