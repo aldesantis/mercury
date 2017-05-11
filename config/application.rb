@@ -33,6 +33,7 @@ module Mercury
     # Use Sidekiq for executing background jobs.
     config.active_job.queue_adapter = :sidekiq
 
+    # Use Sendgrid for delivering email.
     ActionMailer::Base.smtp_settings = {
       user_name: ENV.fetch('SENDGRID_USERNAME'),
       password: ENV.fetch('SENDGRID_PASSWORD'),
@@ -42,5 +43,10 @@ module Mercury
       authentication: :plain,
       enable_starttls_auto: true
     }
+
+    # Use UUIDs in PostgreSQL by default.
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+    end
   end
 end
