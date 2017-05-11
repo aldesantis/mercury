@@ -6,7 +6,7 @@ module Mercury
       step :deliver!
 
       def deliver!(params:, **)
-        params[:notification].recipient.devices.where(type: 'apple').each do |device|
+        devices_for(params[:notification]).each do |device|
           Rpush::Apns::Notification.create!(
             app: Rpush::Apns::App.find_by(name: 'ios_app'),
             device_token: device.source['udid'],
@@ -14,6 +14,20 @@ module Mercury
             data: params[:notification].meta
           )
         end
+      end
+
+      private
+
+      def devices_for(notification)
+        case notification.recipient
+        when ::Profile
+          notification.recipient.devices
+        when ::ProfileGroup
+          ::Device.joins(profile: :profile_groups).where(
+            'profile_groups.id = ?',
+            notification.recipient_id
+          )
+        end.where(type: 'apple')
       end
     end
   end
