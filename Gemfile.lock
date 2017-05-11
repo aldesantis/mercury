@@ -31,7 +31,7 @@ GIT
 
 GIT
   remote: git://github.com/pragmarb/pragma-rails.git
-  revision: 8b7ac376d379109b51b7a3966a47db361c7ff80d
+  revision: 5ab7344a7453c3b9984ef81d674023c3d911978e
   specs:
     pragma-rails (2.0.0)
       pragma (~> 2.0)
@@ -39,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/pragmarb/pragma.git
-  revision: 146d7bcc4aec43550767c4fffedc0af60f1ae1f4
+  revision: 9ef2301390c06537809baf3170db141b67c2a2e5
   specs:
     pragma (2.0.0)
       pragma-contract (~> 2.0)
