@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mercury::Notification::Deliver do
   subject(:result) do
     described_class.call({
