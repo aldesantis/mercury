@@ -7,5 +7,5 @@ class Device < ApplicationRecord
 
   belongs_to :profile, inverse_of: :devices
 
-  enumerize :type, in: %w[ios]
+  enumerize :type, in: %w[apple]
 end
