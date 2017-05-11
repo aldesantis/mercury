@@ -14,9 +14,9 @@ ActiveRecord::Schema.define(version: 20170511054450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
+  enable_extension "pgcrypto"
 
-  create_table "profile_groups", force: :cascade do |t|
+  create_table "profile_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.index ["name"], name: "index_profile_groups_on_name", unique: true
   end
