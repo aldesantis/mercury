@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170511084421) do
     t.string "recipient_type", null: false
     t.uuid "recipient_id", null: false
     t.string "text", null: false
-    t.json "meta", default: "{}", null: false
+    t.json "meta", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
