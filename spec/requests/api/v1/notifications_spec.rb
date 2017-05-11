@@ -62,6 +62,14 @@ RSpec.describe '/api/v1/notifications' do
       expect(parsed_response).to match(a_hash_including(notification.stringify_keys))
     end
 
+    it 'calls the Deliver operation' do
+      expect(Mercury::Notification::Deliver).to receive(:call)
+        .with(notification: an_instance_of(Notification))
+        .once
+
+      subject.call
+    end
+
     context 'when passing invalid meta' do
       let(:notification) do
         attributes_for(:notification).merge(
