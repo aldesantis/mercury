@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :profiles, only: %i(index show create update destroy)
       resources :notifications, only: %i(index show create update destroy)
       resources :devices, only: %i(index show create update destroy)
+      resources :auth_tokens, only: %i(index show create update destroy), path: 'auth-tokens'
     end
   end
 end
