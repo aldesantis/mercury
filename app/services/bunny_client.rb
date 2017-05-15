@@ -2,6 +2,15 @@
 
 class BunnyClient
   class << self
+    def publish(payload)
+      exchange.publish(
+        (payload.is_a?(String) ? payload : payload.to_json),
+        routing_key: queue.name
+      )
+    end
+
+    private
+
     def connection
       @client ||= Bunny.new.tap(&:start)
     end
@@ -16,13 +25,6 @@ class BunnyClient
 
     def exchange
       @exchange ||= channel.default_exchange
-    end
-
-    def publish(payload)
-      exchange.publish(
-        (payload.is_a?(String) ? payload : payload.to_json),
-        routing_key: queue.name
-      )
     end
   end
 end
