@@ -34,6 +34,9 @@ gem 'bugsnag'
 # Push notifications
 gem 'rpush'
 
+# JWT
+gem 'jwt'
+
 group :production do
   # Heroku
   gem 'rails_12factor'
