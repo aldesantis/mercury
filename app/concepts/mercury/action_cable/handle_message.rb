@@ -14,12 +14,9 @@ module Mercury
       step :handle!
 
       def handle!(params:, current_profile:, **)
-        BunnyClient.exchange.publish(
-          {
-            data: params[:data],
-            profile: current_profile.id
-          }.to_json,
-          routing_key: BunnyClient.queue.name
+        BunnyClient.publish(
+          data: params[:data],
+          profile: current_profile.id
         )
       end
     end
