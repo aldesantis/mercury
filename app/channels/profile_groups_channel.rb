@@ -6,4 +6,8 @@ class ProfileGroupsChannel < ApplicationCable::Channel
       stream_for profile_group
     end
   end
+
+  def receive(data)
+    handle_message(data)
+  end
 end
