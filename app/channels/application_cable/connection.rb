@@ -2,8 +2,6 @@
 
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    include Knock::Authenticable
-
     identified_by :current_profile
 
     def connect
