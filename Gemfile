@@ -37,6 +37,9 @@ gem 'rpush'
 # JWT
 gem 'jwt'
 
+# RabbitMQ
+gem 'bunny'
+
 group :production do
   # Heroku
   gem 'rails_12factor'

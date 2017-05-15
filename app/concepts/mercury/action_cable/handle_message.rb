@@ -13,9 +13,14 @@ module Mercury
       step Contract::Validate(name: 'params')
       step :handle!
 
-      def handle!(_options)
-        # TODO: implement AC message forwarding over HTTP or RabbitMQ
-        true
+      def handle!(params:, current_profile:, **)
+        BunnyClient.exchange.publish(
+          {
+            data: params[:data],
+            profile: current_profile.id
+          }.to_json,
+          routing_key: BunnyClient.queue.name
+        )
       end
     end
   end
