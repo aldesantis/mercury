@@ -10,3 +10,4 @@ BUGSNAG_API_KEY: YourApiKey
 BUGSNAG_RELEASE_STAGE: development
 REDIS_PROVIDER: REDIS_URL
 REDIS_URL: redis://localhost:6379
+ACTIONCABLE_REQUEST_ORIGINS: https://my-app.herokuapp.com # use 'false' to disable

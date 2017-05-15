@@ -11,10 +11,10 @@ module ApplicationCable
     private
 
     def find_current_profile
-      authorization = request.headers['Authorization'].split(' ')[1]
+      authorization = request.authorization.split(' ')[1]
       return reject_unauthorized_connection if authorization.blank?
 
-      token = Base64.decode64(authorization).split(' ')[1].split(':')[1]
+      token = Base64.decode64(authorization)
       return reject_unauthorized_connection if token.blank?
 
       begin
