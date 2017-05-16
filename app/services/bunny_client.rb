@@ -12,7 +12,7 @@ class BunnyClient
     private
 
     def connection
-      @client ||= Bunny.new.tap(&:start)
+      @connection ||= Bunny.new.tap(&:start)
     end
 
     def channel
