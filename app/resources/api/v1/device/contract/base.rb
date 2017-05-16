@@ -14,7 +14,7 @@ module API
               def self.messages
                 super.merge(en: {
                   errors: {
-                    apns_app?: 'must be a valid APNS app name'
+                    apns_app?: 'must be a valid APNS app ID'
                   }
                 })
               end
