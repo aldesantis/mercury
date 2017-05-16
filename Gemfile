@@ -81,4 +81,7 @@ group :test do
 
   # CircleCI
   gem 'rspec_junit_formatter'
+
+  # Code coverage
+  gem 'codacy-coverage', require: false
 end
