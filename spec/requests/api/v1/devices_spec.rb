@@ -79,7 +79,7 @@ RSpec.describe '/api/v1/devices' do
       it 'responds with the error' do
         subject.call
         expect(parsed_response['meta']['errors']['source'].first).to eq(
-          ['apns_app', ['must be a valid APNS app name']]
+          ['apns_app', ['must be a valid APNS app ID']]
         )
       end
     end
