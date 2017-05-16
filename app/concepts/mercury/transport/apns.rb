@@ -2,7 +2,7 @@
 
 module Mercury
   module Transport
-    class APN < Base
+    class Apns < Base
       step :deliver!
 
       def deliver!(params:, **)

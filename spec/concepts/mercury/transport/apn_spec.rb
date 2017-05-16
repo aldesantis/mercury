@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mercury::Transport::APN do
+RSpec.describe Mercury::Transport::Apns do
   subject(:result) { described_class.call(notification: notification) }
 
   context 'when the recipient is a profile' do
