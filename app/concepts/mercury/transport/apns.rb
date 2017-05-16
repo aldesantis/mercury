@@ -5,17 +5,17 @@ module Mercury
     class Apns < Base
       step :deliver!
 
-      def deliver!(params:, **)
-        devices_for(params[:notification]).each do |device|
-          app = ApnsApp.find(device.source['apns_app'])
+      def deliver!(options)
+        options['result.deliveries'] = {}
 
-          Rpush::Apns::Notification.create!(
-            app: app,
-            device_token: device.source['udid'],
-            alert: params[:notification].text,
-            data: params[:notification].meta
+        devices_for(options['params'][:notification]).each do |device|
+          options['result.deliveries'][device.id] = deliver_to_device(
+            device,
+            options['params'][:notification]
           )
         end
+
+        options['result.deliveries'].values.all?(&:itself)
       end
 
       private
@@ -30,6 +30,18 @@ module Mercury
             notification.recipient_id
           )
         end.where(type: 'apple')
+      end
+
+      def deliver_to_device(device, notification)
+        app = ApnsApp.find_by(id: device.source['apns_app'])
+        return false unless app
+
+        Rpush::Apns::Notification.create!(
+          app: app,
+          device_token: device.source['udid'],
+          alert: notification.text,
+          data: notification.meta
+        )
       end
     end
   end
