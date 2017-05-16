@@ -2,6 +2,7 @@
 
 [![CircleCI status](https://img.shields.io/circleci/token/76456c94f050ce9772c7d30d0791bc929071e1bb/project/github/batteries911/mercury/develop.svg?style=flat-square)](https://circleci.com/gh/batteries911/mercury)
 [![Codacy grade](https://img.shields.io/codacy/grade/4a6a6ef185ae47ec8b7dcbfbf8d40a40/develop.svg?style=flat-square)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=batteries911/mercury&amp;utm_campaign=Badge_Grade)
+[![Codacy coverage](https://img.shields.io/codacy/coverage/4a6a6ef185ae47ec8b7dcbfbf8d40a40/develop.svg?style=flat-square)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=batteries911/mercury&utm_campaign=Badge_Coverage)
 
 Mercury is a generic notification broker.
 
