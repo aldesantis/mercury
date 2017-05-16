@@ -11,7 +11,7 @@ RSpec.describe Mercury::Transport::Apns::Dispatch do
     it 'sends the notification to each iOS device' do
       expect(Rpush::Apns::Notification).to receive(:create!)
         .with(a_hash_including(
-          device_token: device.source['udid']
+          device_token: device.source['token']
         ))
         .once
 
@@ -28,7 +28,7 @@ RSpec.describe Mercury::Transport::Apns::Dispatch do
     it 'sends the notification to each iOS device of its profiles' do
       expect(Rpush::Apns::Notification).to receive(:create!)
         .with(a_hash_including(
-          device_token: device.source['udid']
+          device_token: device.source['token']
         ))
         .once
 

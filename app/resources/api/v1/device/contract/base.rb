@@ -27,7 +27,7 @@ module API
             required(:profile).filled
             required(:type).filled(included_in?: ::Device.type.values.map(&:to_s))
             required(:source).schema do
-              required(:udid).filled
+              required(:token).filled
               required(:apns_app).filled(:apns_app?)
             end
           end

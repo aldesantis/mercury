@@ -39,7 +39,7 @@ module Mercury
 
           Rpush::Apns::Notification.create!(
             app: app,
-            device_token: device.source['udid'],
+            device_token: device.source['token'],
             alert: notification.text,
             data: notification.meta
           )

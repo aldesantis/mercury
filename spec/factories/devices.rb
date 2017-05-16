@@ -6,7 +6,7 @@ FactoryGirl.define do
     type { Device.type.values.sample }
     source do
       {
-        'udid' => SecureRandom.uuid,
+        'token' => SecureRandom.uuid,
         'apns_app' => FactoryGirl.create(:apns_app).id
       }
     end
