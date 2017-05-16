@@ -7,8 +7,10 @@ module Mercury
 
       def deliver!(params:, **)
         devices_for(params[:notification]).each do |device|
+          app = ApnsApp.find(device.source['apns_app'])
+
           Rpush::Apns::Notification.create!(
-            app: Rpush::Apns::App.find_by(name: 'ios_app'),
+            app: app,
             device_token: device.source['udid'],
             alert: params[:notification].text,
             data: params[:notification].meta
