@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mercury::ActionCable::HandleMessage do
+RSpec.describe Mercury::Transport::ActionCable::Read do
   subject(:result) do
     described_class.call(
       { data: data },

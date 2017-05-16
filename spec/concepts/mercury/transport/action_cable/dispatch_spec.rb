@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mercury::Transport::ActionCable do
+RSpec.describe Mercury::Transport::ActionCable::Dispatch do
   subject(:result) { described_class.call(notification: notification) }
 
   context 'when the recipient is a profile' do

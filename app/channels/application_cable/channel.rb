@@ -5,7 +5,7 @@ module ApplicationCable
     protected
 
     def handle_message(data)
-      Mercury::ActionCable::HandleMessage.call(
+      Mercury::Transport::ActionCable::Read.call(
         { data: data },
         { 'current_profile' => current_profile }
       )
