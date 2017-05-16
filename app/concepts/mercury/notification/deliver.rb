@@ -8,7 +8,7 @@ module Mercury
       extend Contract::DSL
 
       self['transports.map'] = {
-        'apn' => ::Mercury::Transport::APN,
+        'apns' => ::Mercury::Transport::Apns,
         'cable' => ::Mercury::Transport::ActionCable
       }
 
