@@ -31,7 +31,7 @@ module API
 
             required(:name).filled { unique_name? }
             required(:certificate).filled
-            required(:environment).filled
+            required(:environment).filled(included_in?: %w[development production])
           end
         end
       end
