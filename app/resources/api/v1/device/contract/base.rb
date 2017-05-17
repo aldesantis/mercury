@@ -27,7 +27,7 @@ module API
             required(:profile).filled
             required(:type).filled(included_in?: ::Device.type.values.map(&:to_s))
             required(:source).schema do
-              required(:token).filled(format?: /\A(([a-z0-9]{8})\s){7}([a-z0-9]{8})\z/)
+              required(:token).filled(format?: /\A(([a-z0-9]{8})\s?){8}\z/)
               required(:apns_app).filled(:apns_app?)
             end
           end
