@@ -104,7 +104,8 @@ RSpec.describe '/api/v1/apns-apps' do
 
     context 'when the APNS app has dependent devices' do
       before do
-        create(:device,
+        create(
+          :device,
           type: 'apple',
           source: attributes_for(:device, type: 'apple')[:source].merge('apns_app' => apns_app.id)
         )
