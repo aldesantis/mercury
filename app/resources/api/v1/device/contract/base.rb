@@ -18,11 +18,9 @@ module API
                   }
                 })
               end
-
-              def apns_app?(value)
-                ::ApnsApp.exists?(id: value)
-              end
             end
+
+            predicates API::V1::Common::Contract::Predicates
 
             required(:profile).filled
             required(:type).filled(included_in?: ::Device.type.values.map(&:to_s))

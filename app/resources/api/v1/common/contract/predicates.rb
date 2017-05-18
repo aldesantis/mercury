@@ -20,6 +20,10 @@ module API
 
             !scope.exists?(column => value)
           end
+
+          predicate :apns_app? do |value|
+            ::ApnsApp.exists?(id: value)
+          end
         end
       end
     end

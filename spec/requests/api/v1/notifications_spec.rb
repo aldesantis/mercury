@@ -48,6 +48,8 @@ RSpec.describe '/api/v1/notifications' do
       )
     end
 
+    before { allow(Mercury::Notification::Deliver).to receive(:call) }
+
     it 'responds with 201 Created' do
       subject.call
       expect(last_response.status).to eq(201)
@@ -70,27 +72,26 @@ RSpec.describe '/api/v1/notifications' do
       subject.call
     end
 
-    context 'when passing invalid meta' do
+    context 'with the APNS transport' do
       let(:notification) do
-        attributes_for(:notification).merge(
+        attributes_for(:notification, :apns).merge(
           recipient_type: 'profile',
-          recipient_id: profile.id,
-          meta: 'foo'
+          recipient_id: profile.id
         )
       end
 
-      it 'responds with 422 Unprocessable Entity' do
+      it 'responds with 201 Created' do
         subject.call
-        expect(last_response.status).to eq(422)
+        expect(last_response.status).to eq(201)
       end
 
-      it 'does not create a new notification' do
-        expect(subject).not_to change(Notification, :count)
+      it 'creates a new notification' do
+        expect(subject).to change(Notification, :count).by(1)
       end
 
-      it 'responds with the validation error' do
+      it 'responds with the new notification' do
         subject.call
-        expect(parsed_response['meta']['errors']['meta']).to include('must be a hash')
+        expect(parsed_response).to match(a_hash_including(notification.stringify_keys))
       end
     end
 

@@ -8,11 +8,15 @@ module Mercury
 
         def deliver!(options)
           options['result.deliveries'] = {}
+          options['model.apns_app'] = ::ApnsApp.find(
+            options['params'][:notification].transports['apns']['apns_app']
+          )
 
-          devices_for(options['params'][:notification]).each do |device|
+          devices_for(options['params'][:notification], options['model.apns_app']).each do |device|
             options['result.deliveries'][device.id] = deliver_to_device(
               device,
-              options['params'][:notification]
+              options['params'][:notification],
+              options['model.apns_app']
             )
           end
 
@@ -21,24 +25,23 @@ module Mercury
 
         private
 
-        def devices_for(notification)
-          case notification.recipient
+        def devices_for(notification, apns_app)
+          scope = apns_app.devices
+
+          scope = case notification.recipient
           when ::Profile
-            notification.recipient.devices
+            scope.where(profile: notification.recipient)
           when ::ProfileGroup
-            ::Device.joins(profile: :profile_groups).where(
+            scope.joins(profile: :profile_groups).where(
               'profile_groups.id = ?',
               notification.recipient_id
             )
           end.where(type: 'apple')
         end
 
-        def deliver_to_device(device, notification)
-          app = ApnsApp.find_by(id: device.source['apns_app'])
-          return false unless app
-
+        def deliver_to_device(device, notification, apns_app)
           Rpush::Apns::Notification.create!(
-            app: app,
+            app: apns_app,
             device_token: device.source['token'],
             alert: notification.text,
             data: notification.meta
