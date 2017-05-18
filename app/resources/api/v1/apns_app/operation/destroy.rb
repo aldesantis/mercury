@@ -5,14 +5,19 @@ module API
     module ApnsApp
       module Operation
         class Destroy < Pragma::Operation::Destroy
-          step :update_devices!
+          step :check_dependencies!, before: :destroy!, fail_fast: true
 
-          # TODO: This should be asynchronous, as it blocks the execution of the request.
-          def update_devices!(model:, **)
-            model.devices.find_each do |device|
-              device.source['apns_app'] = device.id
-              device.save!
-            end
+          def check_dependencies!(options)
+            return true if options['model'].devices.empty?
+
+            options['result.response'] = Pragma::Operation::Response::BadRequest.new(
+              entity: Pragma::Operation::Error.new(
+                error_type: :dependent_devices,
+                error_message: 'This application has assigned devices.'
+              )
+            ).decorate_with(Pragma::Decorator::Error)
+
+            false
           end
         end
       end

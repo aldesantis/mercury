@@ -101,5 +101,24 @@ RSpec.describe '/api/v1/apns-apps' do
       subject.call
       expect(last_response.status).to eq(204)
     end
+
+    context 'when the APNS app has dependent devices' do
+      before do
+        create(:device,
+          type: 'apple',
+          source: attributes_for(:device, type: 'apple')[:source].merge('apns_app' => apns_app.id)
+        )
+      end
+
+      it 'responds with 400 Bad Request' do
+        subject.call
+        expect(last_response.status).to eq(400)
+      end
+
+      it 'responds with an error message' do
+        subject.call
+        expect(parsed_response['error_type']).to eq('dependent_devices')
+      end
+    end
   end
 end
