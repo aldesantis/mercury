@@ -28,7 +28,7 @@ module Mercury
         def devices_for(notification, apns_app)
           scope = apns_app.devices
 
-          scope = case notification.recipient
+          case notification.recipient
           when ::Profile
             scope.where(profile: notification.recipient)
           when ::ProfileGroup
@@ -36,7 +36,7 @@ module Mercury
               'profile_groups.id = ?',
               notification.recipient_id
             )
-          end.where(type: 'apple')
+          end
         end
 
         def deliver_to_device(device, notification, apns_app)

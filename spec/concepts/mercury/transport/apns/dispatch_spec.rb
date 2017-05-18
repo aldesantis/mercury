@@ -27,7 +27,9 @@ RSpec.describe Mercury::Transport::Apns::Dispatch do
     let(:profile) { create(:profile, profile_groups: [profile_group]) }
     let(:apns_app) { create(:apns_app) }
     let!(:device) { create(:device, type: 'apple', profile: profile, apns_app: apns_app) }
-    let(:notification) { create(:notification, :apns, recipient: profile_group, apns_app: apns_app) }
+    let(:notification) do
+      create(:notification, :apns, recipient: profile_group, apns_app: apns_app)
+    end
 
     before { create(:device, type: 'apple', profile: profile) }
 
