@@ -116,5 +116,19 @@ RSpec.describe '/api/v1/profile-groups' do
       subject.call
       expect(last_response.status).to eq(204)
     end
+
+    context 'when the profile group has dependent profiles' do
+      before { create(:membership, profile_group: profile_group) }
+
+      it 'responds with 400 Bad Request' do
+        subject.call
+        expect(last_response.status).to eq(400)
+      end
+
+      it 'responds with an error message' do
+        subject.call
+        expect(parsed_response['error_type']).to eq('dependent_profiles')
+      end
+    end
   end
 end
