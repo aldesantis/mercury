@@ -31,6 +31,9 @@ module API
               optional(:apns).schema do
                 required(:apns_app).filled(:int?)
               end
+
+              optional(:action_cable).schema do
+              end
             end
             optional(:meta).maybe(:hash?)
 
