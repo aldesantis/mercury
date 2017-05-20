@@ -12,7 +12,7 @@ class BunnyClient
     private
 
     def connection
-      @connection ||= Bunny.new.tap(&:start)
+      @connection ||= Bunny.new(ENV.fetch('RABBITMQ_URL')).tap(&:start)
     end
 
     def channel
