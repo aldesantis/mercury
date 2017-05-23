@@ -40,6 +40,36 @@ Run the application with:
 $ foreman s -f Procfile.development
 ```
 
+## Usage
+
+### Profile
+
+...
+
+### Devices
+
+...
+
+### Profile Groups
+
+...
+
+### Notifications
+
+...
+
+### Transports
+
+...
+
+#### ActionCable
+
+...
+
+#### APNS
+
+...
+
 ## Testing
 
 RSpec is configured for testing. To run the tests:
