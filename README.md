@@ -4,7 +4,10 @@
 [![Codacy grade](https://img.shields.io/codacy/grade/4a6a6ef185ae47ec8b7dcbfbf8d40a40/develop.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/mercury/dashboard)
 [![Codacy coverage](https://img.shields.io/codacy/coverage/4a6a6ef185ae47ec8b7dcbfbf8d40a40/develop.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/mercury/dashboard)
 
-Mercury is a generic notifications broker.
+Mercury is a generic message broker. It runs as a microservice and is constantly taking messages
+back and forth over all kinds of communication protocols (currently APNS and ActionCable).
+
+If you need something to be known, he's your guy.
 
 ## 1. Requirements
 
