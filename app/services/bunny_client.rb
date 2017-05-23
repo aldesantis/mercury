@@ -20,7 +20,7 @@ class BunnyClient
     end
 
     def queue
-      @queue ||= channel.queue('b911.messages', auto_delete: true)
+      @queue ||= channel.queue('b911.messages')
     end
 
     def exchange
