@@ -9,6 +9,8 @@ back and forth over all kinds of communication protocols (currently APNS and Act
 
 If you need something to be known, he's your guy.
 
+[![Mercury](https://github.com/batteries911/mercury/raw/develop/logo.jpg)](https://en.wikipedia.org/wiki/Mercury_(mythology))
+
 ## 1. Requirements
 
 - Ruby 2.4
