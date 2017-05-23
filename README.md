@@ -6,13 +6,13 @@
 
 Mercury is a generic notifications broker.
 
-## Requirements
+## 1. Requirements
 
 - Ruby 2.4
 - PostgreSQL 9.x
 - Redis 3.x
 
-## Installation
+## 2. Installation
 
 Clone this repo:
 
@@ -40,37 +40,37 @@ Run the application with:
 $ foreman s -f Procfile.development
 ```
 
-## Usage
+## 3. Usage
 
-### Profile
-
-...
-
-### Devices
+### 3.1. Profile
 
 ...
 
-### Profile Groups
+### 3.2. Devices
 
 ...
 
-### Notifications
+### 3.3. Profile Groups
 
 ...
 
-### Transports
+### 3.4. Notifications
 
 ...
 
-#### ActionCable
+### 3.5. Transports
 
 ...
 
-#### APNS
+#### 3.5.1. ActionCable
 
 ...
 
-## Testing
+#### 3.5.2. APNS
+
+...
+
+## 4. Testing
 
 RSpec is configured for testing. To run the tests:
 
@@ -78,7 +78,7 @@ RSpec is configured for testing. To run the tests:
 $ bin/rspec
 ```
 
-## Deployment
+## 5. Deployment
 
 The application is already configured for deployment on Heroku, including a release command that
 runs DB migrations.
@@ -92,6 +92,6 @@ $ figaro heroku
 $ git push heroku master
 ```
 
-## Contributing
+## 6. Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/batteries911/mercury.
