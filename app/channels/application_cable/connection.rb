@@ -28,7 +28,7 @@ module ApplicationCable
     end
 
     def find_jwt_from_url_or_headers
-      authorization_header = request.authorization.split(' ')[1]
+      authorization_header = request.authorization.to_s.split(' ')[1]
       protocol_header = request.headers[:HTTP_SEC_WEBSOCKET_PROTOCOL].to_s.split(',')[1]
 
       if authorization_header.present?
