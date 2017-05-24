@@ -11,11 +11,7 @@ module ApplicationCable
     private
 
     def find_current_profile
-      authorization = request.authorization.split(' ')[1]
-      return reject_unauthorized_connection if authorization.blank?
-
-      token = Base64.decode64(authorization)
-      return reject_unauthorized_connection if token.blank?
+      token = find_jwt_from_url_or_headers
 
       begin
         decoded_token = JWT.decode(
@@ -29,6 +25,19 @@ module ApplicationCable
       end
 
       Profile.find_by(id: decoded_token[0]['sub']) || reject_unauthorized_connection
+    end
+
+    def find_jwt_from_url_or_headers
+      authorization_header = request.authorization.split(' ')[1]
+      protocol_header = request.headers[:HTTP_SEC_WEBSOCKET_PROTOCOL].to_s.split(',')[1]
+
+      if authorization_header.present?
+        return Base64.decode64(authorization_header)
+      elsif protocol_header.present?
+        return protocol_header
+      end
+
+      reject_unauthorized_connection
     end
   end
 end
