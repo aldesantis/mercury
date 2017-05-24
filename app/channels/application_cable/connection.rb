@@ -12,6 +12,7 @@ module ApplicationCable
 
     def find_current_profile
       token = find_jwt_from_url_or_headers
+      return reject_unauthorized_connection unless token
 
       begin
         decoded_token = JWT.decode(
@@ -35,12 +36,10 @@ module ApplicationCable
       puts "Sec-WebSocket-Protocol header: #{request.headers[:HTTP_SEC_WEBSOCKET_PROTOCOL].to_s.inspect}"
 
       if authorization_header.present?
-        return Base64.decode64(authorization_header)
+        Base64.decode64(authorization_header)
       elsif protocol_header.present?
-        return protocol_header
+        protocol_header
       end
-
-      reject_unauthorized_connection
     end
   end
 end
