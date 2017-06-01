@@ -9,6 +9,8 @@ module ApplicationCable
     protected
 
     def handle_message(data)
+      Rails.logger.debug "Handling incoming AC message: #{data.inspect}"
+
       Mercury::Transport::ActionCable::Read.call(
         { data: data },
         { 'current_profile' => current_profile }
