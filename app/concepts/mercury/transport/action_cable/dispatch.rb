@@ -10,7 +10,7 @@ module Mercury
           channel_for(params[:notification]).broadcast_to(
             params[:notification].recipient,
             text: params[:notification].text,
-            meta_data: params[:notification].meta
+            meta: params[:notification].meta
           )
         end
 
