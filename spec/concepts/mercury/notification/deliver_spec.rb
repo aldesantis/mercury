@@ -6,12 +6,12 @@ RSpec.describe Mercury::Notification::Deliver do
       notification: notification
     }, {
       'transports.map' => {
-        'apn' => apn_transport
+        'apns' => apn_transport
       }
     })
   end
 
-  let(:notification) { build_stubbed(:notification, transports: [:apn]) }
+  let(:notification) { build_stubbed(:notification, :apns) }
 
   let(:apn_transport) do
     Class.new do

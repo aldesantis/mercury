@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.0'
+ruby '2.4.1'
 
 # Ruby on Rails
 gem 'rails', '~> 5.1.0'
@@ -33,6 +33,12 @@ gem 'bugsnag'
 
 # Push notifications
 gem 'rpush'
+
+# JWT
+gem 'jwt'
+
+# RabbitMQ
+gem 'bunny'
 
 group :production do
   # Heroku
@@ -72,4 +78,10 @@ group :test do
   gem 'fuubar'
   gem 'shoulda-matchers'
   gem 'webmock'
+
+  # CircleCI
+  gem 'rspec_junit_formatter'
+
+  # Code coverage
+  gem 'codacy-coverage', require: false
 end

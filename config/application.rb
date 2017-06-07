@@ -48,5 +48,15 @@ module Mercury
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end
+
+    # Run ActionCable in-app.
+    config.action_cable.mount_path = '/cable'
+
+    # Configure ActionCable request origins.
+    if ENV.fetch('ACTIONCABLE_REQUEST_ORIGINS') == 'false'
+      config.action_cable.disable_request_forgery_protection = true
+    else
+      config.action_cable.allowed_request_origins = ENV.fetch('ACTIONCABLE_REQUEST_ORIGINS').split(',')
+    end
   end
 end

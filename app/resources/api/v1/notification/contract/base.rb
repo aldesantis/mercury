@@ -27,9 +27,12 @@ module API
             required(:recipient_type).filled(included_in?: %w[Profile ProfileGroup])
             required(:recipient_id).filled
             required(:text).filled
-            required(:transports).filled do
-              min_size?(1) & each do
-                included_in?(Mercury::Notification::Deliver['transports.map'].keys)
+            required(:transports).schema do
+              optional(:apns).schema do
+                required(:apns_app).filled(:int?)
+              end
+
+              optional(:action_cable).schema do
               end
             end
             optional(:meta).maybe(:hash?)

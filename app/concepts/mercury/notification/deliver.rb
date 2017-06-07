@@ -8,7 +8,8 @@ module Mercury
       extend Contract::DSL
 
       self['transports.map'] = {
-        'apn' => ::Mercury::Transport::APN
+        'apns' => ::Mercury::Transport::Apns::Dispatch,
+        'action_cable' => ::Mercury::Transport::ActionCable::Dispatch
       }
 
       contract 'params', (Dry::Validation.Schema do
@@ -19,13 +20,13 @@ module Mercury
       step :deliver!
 
       def deliver!(options, params:, **)
-        params[:notification].transports.each do |transport|
+        params[:notification].transports.keys.each do |transport|
           options["result.transports.#{transport}"] = options['transports.map'][transport].call(
             notification: params[:notification]
           )
         end
 
-        params[:notification].transports.all? do |transport|
+        params[:notification].transports.keys.all? do |transport|
           options["result.transports.#{transport}"].success?
         end
       end

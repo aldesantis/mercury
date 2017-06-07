@@ -59,6 +59,30 @@ RSpec.describe '/api/v1/devices' do
       subject.call
       expect(parsed_response).to match(a_hash_including(device.stringify_keys))
     end
+
+    context 'when an invalid apns_app is passed' do
+      let(:device) do
+        attributes_for(:device).merge(profile: profile.id).tap do |d|
+          d[:source]['apns_app'] = 'dummy'
+        end
+      end
+
+      it 'responds with 422 Unprocessable Entity' do
+        subject.call
+        expect(last_response.status).to eq(422)
+      end
+
+      it 'does not create a new device' do
+        expect(subject).not_to change(Device, :count)
+      end
+
+      it 'responds with the error' do
+        subject.call
+        expect(parsed_response['meta']['errors']['source'].first).to eq(
+          ['apns_app', ['must be a valid APNS app ID']]
+        )
+      end
+    end
   end
 
   describe 'PATCH /:id' do
