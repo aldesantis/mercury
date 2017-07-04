@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :mercury do
   desc 'Imports the APNS certificates.'
   task import_certs: :environment do
