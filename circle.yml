@@ -15,7 +15,7 @@ deployment:
       appname: b911-mercury-staging
 
   production:
-    branch: production
+    branch: master
     heroku:
       appname: b911-mercury-production
 
