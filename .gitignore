@@ -24,3 +24,6 @@ Procfile.local
 
 # Ignore RSpec files.
 /spec/examples.txt
+
+# Ignore coverage reports.
+/coverage

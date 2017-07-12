@@ -8,14 +8,14 @@ development:
   host: localhost
   username: postgres
   password: postgres
-  database: api_development
+  database: mercury_development
 
 test:
   <<: *default
   host: localhost
   username: postgres
   password: postgres
-  database: api_test
+  database: mercury_test
 
 production:
   <<: *default

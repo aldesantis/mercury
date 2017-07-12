@@ -33,6 +33,7 @@ module Mercury
     # Use Sidekiq for executing background jobs.
     config.active_job.queue_adapter = :sidekiq
 
+    # Use Sendgrid for delivering email.
     ActionMailer::Base.smtp_settings = {
       user_name: ENV.fetch('SENDGRID_USERNAME'),
       password: ENV.fetch('SENDGRID_PASSWORD'),
@@ -42,5 +43,20 @@ module Mercury
       authentication: :plain,
       enable_starttls_auto: true
     }
+
+    # Use UUIDs in PostgreSQL by default.
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+    end
+
+    # Run ActionCable in-app.
+    config.action_cable.mount_path = '/cable'
+
+    # Configure ActionCable request origins.
+    if ENV.fetch('ACTIONCABLE_REQUEST_ORIGINS') == 'false'
+      config.action_cable.disable_request_forgery_protection = true
+    else
+      config.action_cable.allowed_request_origins = ENV.fetch('ACTIONCABLE_REQUEST_ORIGINS').split(',')
+    end
   end
 end
