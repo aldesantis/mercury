@@ -37,11 +37,17 @@ module ApplicationCable
         .last
         .to_s.strip
 
+      jwt = nil
+
       if authorization_header.present?
-        Base64.decode64(authorization_header)
+        jwt = Base64.decode64(authorization_header)
+        Rails.logger.debug "Found JWT in Authorization header: #{jwt}"
       elsif protocol_header.present?
-        protocol_header
+        jwt = protocol_header
+        Rails.logger.debug "Found JWT in Sec-WebSocket-Protocol header: #{jwt}"
       end
+
+      jwt
     end
   end
 end
