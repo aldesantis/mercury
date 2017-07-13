@@ -25,7 +25,10 @@ module ApplicationCable
         return reject_unauthorized_connection
       end
 
-      Profile.find_by(id: decoded_token[0]['sub']) || reject_unauthorized_connection
+      profile_id = decoded_token[0]['sub']
+      Rails.logger.debug "[WebSocket] JWT translates to profile ID #{profile_id}"
+
+      Profile.find_by(id: profile_id) || reject_unauthorized_connection
     end
 
     def find_jwt_from_url_or_headers
@@ -41,10 +44,12 @@ module ApplicationCable
 
       if authorization_header.present?
         jwt = Base64.decode64(authorization_header)
-        Rails.logger.debug "Found JWT in Authorization header: #{jwt}"
+        Rails.logger.debug "[WebSocket] Found JWT in Authorization header: #{jwt}"
       elsif protocol_header.present?
         jwt = protocol_header
-        Rails.logger.debug "Found JWT in Sec-WebSocket-Protocol header: #{jwt}"
+        Rails.logger.debug "[WebSocket] Found JWT in Sec-WebSocket-Protocol header: #{jwt}"
+      else
+        Rails.logger.debug '[WebSocket] Could not find JWT'
       end
 
       jwt
