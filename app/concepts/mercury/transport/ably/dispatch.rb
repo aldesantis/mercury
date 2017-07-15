@@ -6,7 +6,7 @@ module Mercury
       class Dispatch < Base
         step :deliver!
 
-        self['ably'] = ::Ably::Rest.new(key: ENV.fetch('ABLY_API_KEY'))
+        self['ably'] = ::Mercury::Ably.rest
 
         def deliver!(params:, ably:, **)
           ably.channel(channel_for(params[:notification])).publish(

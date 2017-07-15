@@ -6,7 +6,7 @@ module Mercury
       class << self
         def call
           EventMachine.run do
-            client = ::Ably::Realtime.new(key: ENV.fetch('ABLY_API_KEY'))
+            client = Ably.realtime
 
             client.connection.connect do
               log 'event=connected'

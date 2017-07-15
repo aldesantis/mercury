@@ -12,7 +12,7 @@ class AuthToken
         'HS256'
       )
     when :ably
-      Ably::Rest.new(key: ENV.fetch('ABLY_API_KEY')).auth.create_token_request(
+      Mercury::Ably.rest.auth.create_token_request(
         ttl: 3600,
         client_id: profile.id
       ).as_json
