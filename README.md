@@ -47,35 +47,28 @@ $ foreman s -f Procfile.development
 
 ## 3. Usage
 
-### 3.1. Profile
+There are four core concepts in Mercury:
 
-...
+- **Profile:** A profile identifies a user who can receive and send messages.
+- **Profile Group:** Profile groups are collections of users who share traits. The most common use
+  for profile groups is to group users by role (admin, regular user etc.)
+- **Device:** Devices are anything you can be notify: a physical iOS device, an email address etc.
+- **Transport:** Transports are technologies supported for relying messages back and forth. Some
+  transports have write-only capability (e.g. APNS), while some allow for two-way communication
+  (Ably, ActionCable).
+  
+## 4. Transports
 
-### 3.2. Devices
+Out of the box, Mercury supports three transports:
 
-...
+- **ActionCable** (read and write)
+- **Ably** (read and write)
+- **APNS** (write)
 
-### 3.3. Profile Groups
+Incoming ActionCable and Ably messages are received, parsed to extract the profile ID and then
+forwarded over RabbitMQ.
 
-...
-
-### 3.4. Notifications
-
-...
-
-### 3.5. Transports
-
-...
-
-#### 3.5.1. ActionCable
-
-...
-
-#### 3.5.2. APNS
-
-...
-
-## 4. Testing
+## 5. Testing
 
 RSpec is configured for testing. To run the tests:
 
@@ -83,7 +76,7 @@ RSpec is configured for testing. To run the tests:
 $ bin/rspec
 ```
 
-## 5. Deployment
+## 6. Deployment
 
 The application is already configured for deployment on Heroku, including a release command that
 runs DB migrations.
@@ -97,6 +90,6 @@ $ figaro heroku
 $ git push heroku master
 ```
 
-## 6. Contributing
+## 7. Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/batteries911/mercury.
