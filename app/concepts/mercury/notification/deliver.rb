@@ -9,7 +9,8 @@ module Mercury
 
       self['transports.map'] = {
         'apns' => ::Mercury::Transport::Apns::Dispatch,
-        'action_cable' => ::Mercury::Transport::ActionCable::Dispatch
+        'action_cable' => ::Mercury::Transport::ActionCable::Dispatch,
+        'ably' => ::Mercury::Transport::Ably::Dispatch
       }
 
       contract 'params', (Dry::Validation.Schema do
