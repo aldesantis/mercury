@@ -59,14 +59,59 @@ There are four core concepts in Mercury:
   
 ## 4. Transports
 
-Out of the box, Mercury supports three transports:
+Out of the box, Mercury supports three transports.
 
-- **ActionCable** (read and write)
-- **Ably** (read and write)
-- **APNS** (write)
+## Ably
 
-Incoming ActionCable and Ably messages are received, parsed to extract the profile ID and then
-forwarded over RabbitMQ.
+[Ably](https://ably.io) is the preferred transport for real-time communication and is replacing 
+ActionCable.
+
+**Outgoing messages** are delivered to the **profiles:ID** channel if the recipient is a specific
+profile or to the **profile_groups:ID** channel if the recipient is a profile group.
+
+**Incoming messages** are parsed to extract the Mercury profile ID and then pushed to RabbitMQ
+where they can be consumed by any listener.
+
+**Authentication** happens through Ably token requests. The token requests can be sent to any
+clients that wish to connect to Ably.
+
+## ActionCable
+
+While still supported, ActionCable is being replaced by the Ably transport due to its lack of
+reliability.
+
+When clients subcribe, they are automatically subscribed to their profile's channel and to the
+channel of each profile group they belong to.
+
+**Outgoing messages** are delivered to the profile channel if the recipient is a specific
+profile or to the profile group channel if the recipient is a profile group.
+
+**Incoming messages** are parsed to extract the Mercury profile ID and then pushed to RabbitMQ
+where they can be consumed by any listener.
+
+**Authentication** happens through JWT. The provided JWT can be used to connect to ActionCable.
+
+## APNS
+
+APNS support is provided by [RPush](https://github.com/rpush/rpush).
+
+APNS is a bit different from the other transports, because it requires for each APNS application
+to be configured and for its certificate to be imported. It also requires that each profile has
+a device in order to send notification to the appropriate APNS tokens.
+
+Mercury comes out of the box with the sandbox and production certificates for the Batteries 911
+iOS apps. They can be imported with a Rake task:
+
+```console
+$ CERTS_PASSWORD=SecretPassword rails mercury:import_certs
+```
+
+If you need to import the certificates, ask Alessandro or Julian for the password.
+
+**Outgoing messages** require that the APNS app to use for delivery is specified. If the reciient
+is a profile, the message is delivered to the profile's devices for that APNS app. If the recipient
+is a profile group, the message is delivered to all the devices for that APNS app in the profile
+group.
 
 ## 5. Testing
 
