@@ -46,4 +46,10 @@ Rails.application.configure do
 
   # Tell Action Mailer not to deliver emails to the real world.
   config.action_mailer.perform_deliveries = false
+  
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
 end

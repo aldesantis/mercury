@@ -8,6 +8,7 @@ module API
         feature Pragma::Decorator::Association
 
         belongs_to :profile, decorator: API::V1::Profile::Decorator
+        property :transport
         property :token
       end
     end
