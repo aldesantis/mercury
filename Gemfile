@@ -40,6 +40,9 @@ gem 'jwt'
 # RabbitMQ
 gem 'bunny'
 
+# Ably
+gem 'ably'
+
 group :production do
   # Heroku
   gem 'rails_12factor'

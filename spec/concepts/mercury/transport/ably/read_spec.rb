@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.describe Mercury::Transport::ActionCable::Read do
+RSpec.describe Mercury::Transport::Ably::Read do
   subject(:result) do
     described_class.call(
-      { data: data },
+      { message_name: message_name, data: data },
       { 'current_profile' => current_profile }
     )
   end
 
-  let(:data) { { 'foo' => 'bar', 'action' => 'test' } }
+  let(:message_name) { 'test' }
+  let(:data) { { 'foo' => 'bar' } }
   let(:current_profile) { build_stubbed(:profile) }
 
   before do
@@ -23,7 +24,7 @@ RSpec.describe Mercury::Transport::ActionCable::Read do
   it 'publishes the message to RabbitMQ' do
     expect(BunnyClient).to receive(:publish)
       .with(a_hash_including(
-        transport: :action_cable,
+        transport: :ably,
         message_name: 'test',
         data: data,
         profile: current_profile.id

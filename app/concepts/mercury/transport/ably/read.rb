@@ -2,11 +2,12 @@
 
 module Mercury
   module Transport
-    module ActionCable
+    module Ably
       class Read < Trailblazer::Operation
         extend Contract::DSL
 
         contract 'params', (Dry::Validation.Schema do
+          required(:message_name).filled(:str?)
           required(:data).schema do
           end
         end)
@@ -16,8 +17,8 @@ module Mercury
 
         def handle!(params:, current_profile:, **)
           BunnyClient.publish(
-            transport: :action_cable,
-            message_name: params[:data].with_indifferent_access[:action],
+            transport: :ably,
+            message_name: params[:message_name],
             data: params[:data],
             profile: current_profile.id
           )
