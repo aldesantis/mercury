@@ -66,8 +66,8 @@ Out of the box, Mercury supports three transports.
 [Ably](https://ably.io) is the preferred transport for real-time communication and is replacing 
 ActionCable.
 
-**Outgoing messages** are delivered to the **profiles:ID** channel if the recipient is a specific
-profile or to the **profile_groups:ID** channel if the recipient is a profile group.
+**Outgoing messages** are delivered to the `profiles:ID` channel if the recipient is a specific
+profile or to the `profile_groups:ID` channel if the recipient is a profile group.
 
 **Incoming messages** are parsed to extract the Mercury profile ID and then pushed to RabbitMQ
 where they can be consumed by any listener.
