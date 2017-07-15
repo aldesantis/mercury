@@ -61,7 +61,7 @@ There are four core concepts in Mercury:
 
 Out of the box, Mercury supports three transports.
 
-## Ably
+### 4.1 Ably
 
 [Ably](https://ably.io) is the preferred transport for real-time communication and is replacing 
 ActionCable.
@@ -75,7 +75,7 @@ where they can be consumed by any listener.
 **Authentication** happens through Ably token requests. The token requests can be sent to any
 clients that wish to connect to Ably.
 
-## ActionCable
+### 4.2 ActionCable
 
 While still supported, ActionCable is being replaced by the Ably transport due to its lack of
 reliability.
@@ -91,7 +91,7 @@ where they can be consumed by any listener.
 
 **Authentication** happens through JWT. The provided JWT can be used to connect to ActionCable.
 
-## APNS
+### 4.3 APNS
 
 APNS support is provided by [RPush](https://github.com/rpush/rpush).
 
