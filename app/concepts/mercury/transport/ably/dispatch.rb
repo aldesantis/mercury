@@ -4,9 +4,12 @@ module Mercury
   module Transport
     module Ably
       class Dispatch < Base
+        step :initialize_ably!
         step :deliver!
 
-        self['ably'] = ::Mercury::Ably.rest
+        def initialize_ably!(options)
+          options['ably'] ||= ::Mercury::Ably.rest
+        end
 
         def deliver!(params:, ably:, **)
           ably.channel(channel_for(params[:notification])).publish(

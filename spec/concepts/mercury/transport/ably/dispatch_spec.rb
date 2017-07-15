@@ -5,7 +5,7 @@ RSpec.describe Mercury::Transport::Ably::Dispatch do
     described_class.call({
       notification: notification
     }, {
-      ably: ably
+      'ably' => ably
     })
   end
 
