@@ -5,7 +5,7 @@
 [![Codacy coverage](https://img.shields.io/codacy/coverage/4a6a6ef185ae47ec8b7dcbfbf8d40a40/develop.svg?style=flat-square)](https://www.codacy.com/app/Batteries911/mercury/dashboard)
 
 Mercury is a generic message broker. It runs as a microservice and is constantly taking messages
-back and forth over all kinds of communication protocols (currently APNS and ActionCable).
+back and forth over all kinds of communication channels.
 
 If you need something to be known, he's your guy.
 
@@ -52,7 +52,7 @@ There are four core concepts in Mercury:
 - **Profile:** A profile identifies a user who can receive and send messages.
 - **Profile Group:** Profile groups are collections of users who share traits. The most common use
   for profile groups is to group users by role (admin, regular user etc.)
-- **Device:** Devices are anything you can be notify: a physical iOS device, an email address etc.
+- **Device:** Devices are anything you can notify: a physical iOS device, an email address etc.
 - **Transport:** Transports are technologies supported for relying messages back and forth. Some
   transports have write-only capability (e.g. APNS), while some allow for two-way communication
   (Ably, ActionCable).
@@ -70,24 +70,23 @@ ActionCable.
 profile or to the `profile_groups:ID` channel if the recipient is a profile group.
 
 **Incoming messages** are parsed to extract the Mercury profile ID and then pushed to RabbitMQ
-where they can be consumed by any listener.
+where they can be consumed by any subscribers.
 
 **Authentication** happens through Ably token requests. The token requests can be sent to any
 clients that wish to connect to Ably.
 
 ### 4.2 ActionCable
 
-While still supported, ActionCable is being replaced by the Ably transport due to its lack of
-reliability.
+While still supported, ActionCable is being replaced by the Ably transport due to its unreliability.
 
-When clients subcribe, they are automatically subscribed to their profile's channel and to the
+When clients connect, they are automatically subscribed to their profile's channel and to the
 channel of each profile group they belong to.
 
 **Outgoing messages** are delivered to the profile channel if the recipient is a specific
 profile or to the profile group channel if the recipient is a profile group.
 
 **Incoming messages** are parsed to extract the Mercury profile ID and then pushed to RabbitMQ
-where they can be consumed by any listener.
+where they can be consumed by any subscribers.
 
 **Authentication** happens through JWT. The provided JWT can be used to connect to ActionCable.
 
@@ -108,7 +107,7 @@ $ CERTS_PASSWORD=SecretPassword rails mercury:import_certs
 
 If you need to import the certificates, ask Alessandro or Julian for the password.
 
-**Outgoing messages** require that the APNS app to use for delivery is specified. If the reciient
+**Outgoing messages** require that the APNS app to use for delivery is specified. If the recipient
 is a profile, the message is delivered to the profile's devices for that APNS app. If the recipient
 is a profile group, the message is delivered to all the devices for that APNS app in the profile
 group.
