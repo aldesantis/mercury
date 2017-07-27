@@ -46,6 +46,9 @@ group :production do
 
   # Throttling
   gem 'rack-attack'
+
+  # Monitoring
+  gem 'scout_apm'
 end
 
 group :development, :test do
