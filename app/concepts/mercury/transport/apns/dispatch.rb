@@ -44,7 +44,8 @@ module Mercury
             app: apns_app,
             device_token: device.source['token'],
             alert: notification.text,
-            data: notification.meta
+            data: notification.meta,
+            sound: 'default'
           )
         end
       end
