@@ -348,6 +348,8 @@ GEM
       uber
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2017.2)
+      tzinfo (>= 1.0.0)
     uber (0.1.0)
     unicode-display_width (1.3.0)
     webmock (3.0.1)
@@ -402,6 +404,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-watcher-listen
+  tzinfo-data
   webmock
 
 RUBY VERSION
