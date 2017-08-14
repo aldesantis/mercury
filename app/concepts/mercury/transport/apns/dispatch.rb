@@ -45,7 +45,7 @@ module Mercury
             device_token: device.source['token'],
             alert: notification.text,
             data: notification.meta,
-            sound: 'default'
+            sound: 'alert_notification.aiff'
           )
         end
       end
