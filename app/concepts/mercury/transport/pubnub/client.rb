@@ -24,6 +24,7 @@ module Mercury
           @client = ::Pubnub.new(
             subscribe_key: ENV.fetch('PUBNUB_SUBSCRIBE_KEY'),
             publish_key: ENV.fetch('PUBNUB_PUBLISH_KEY'),
+            secret_key: ENV.fetch('PUBNUB_SECRET_KEY'),
             ssl: true
           )
 
