@@ -106,6 +106,23 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    celluloid (0.17.3)
+      celluloid-essentials
+      celluloid-extras
+      celluloid-fsm
+      celluloid-pool
+      celluloid-supervision
+      timers (>= 4.1.1)
+    celluloid-essentials (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-extras (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-fsm (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-pool (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-supervision (0.20.6)
+      timers (>= 4.1.1)
     clockwork (2.0.2)
       activesupport
       tzinfo
@@ -177,6 +194,8 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashdiff (0.3.6)
+    hitimes (1.2.6)
+    httpclient (2.8.3)
     i18n (0.8.6)
     inflecto (0.0.2)
     json (2.1.0)
@@ -215,6 +234,11 @@ GEM
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     public_suffix (3.0.0)
+    pubnub (4.0.23)
+      celluloid (~> 0.17)
+      dry-validation (~> 0.10)
+      httpclient (~> 2.8, >= 2.8.3)
+      json (>= 1.8, < 3)
     puma (3.10.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -338,6 +362,8 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.19.4)
     thread_safe (0.3.6)
+    timers (4.1.2)
+      hitimes
     trailblazer (2.0.7)
       declarative
       reform (>= 2.2.0, < 3.0.0)
@@ -388,6 +414,7 @@ DEPENDENCIES
   pragma-policy!
   pragma-rails!
   pry-rails
+  pubnub
   puma
   rack-attack
   rack-cors
