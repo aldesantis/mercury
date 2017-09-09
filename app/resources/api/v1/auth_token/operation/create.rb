@@ -8,13 +8,8 @@ module API
           step :grant_pubnub_access!
 
           def grant_pubnub_access!(model:, **)
-            channels = ["profiles:#{model.profile.id}"]
-            channels += model.profile.profile_groups.map do |profile_group|
-              "profile_groups:#{profile_group.id}"
-            end
-
             Mercury::Transport::Pubnub::Client.grant(
-              channels: channels,
+              channels: model.pubnub_channels,
               read: true,
               write: false,
               ttl: 0,
