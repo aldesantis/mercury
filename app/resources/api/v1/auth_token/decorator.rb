@@ -9,6 +9,7 @@ module API
 
         belongs_to :profile, decorator: API::V1::Profile::Decorator
         property :token
+        property :pubnub_channels
       end
     end
   end

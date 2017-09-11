@@ -43,6 +43,9 @@ gem 'bunny'
 # Timezone info
 gem 'tzinfo-data'
 
+# Pubnub
+gem 'pubnub'
+
 group :production do
   # Heroku
   gem 'rails_12factor'

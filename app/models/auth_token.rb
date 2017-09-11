@@ -11,6 +11,14 @@ class AuthToken
     )
   end
 
+  def pubnub_channels
+    ["profiles:#{profile.id}"].tap do |channels|
+      profile.profile_groups.each do |profile_group|
+        channels << "profile_groups:#{profile_group.id}"
+      end
+    end
+  end
+
   def save
     true
   end
