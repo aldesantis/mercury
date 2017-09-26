@@ -7,6 +7,7 @@ module Mercury
         step :deliver!
 
         def deliver!(params:, **)
+          return if ENV['DISABLE_PUBNUB'] == 'true'
           Client.publish(
             channel: channel_for(params[:notification]),
             message: {
