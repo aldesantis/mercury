@@ -21,7 +21,7 @@ module Mercury
       step :deliver!
 
       def deliver!(options, params:, **)
-        params[:notification].transports.keys.each do |transport|
+        params[:notification].transports.each_key do |transport|
           options["result.transports.#{transport}"] = options['transports.map'][transport].call(
             notification: params[:notification]
           )
