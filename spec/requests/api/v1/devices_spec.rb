@@ -11,9 +11,9 @@ RSpec.describe '/api/v1/devices' do
       expect(last_response.status).to eq(200)
     end
 
-    it 'responds with the devices>' do
+    it 'responds with the devices' do
       subject.call
-      expect(parsed_response).to match_array([
+      expect(parsed_response['data']).to match_array([
         a_hash_including('id' => device.id)
       ])
     end
