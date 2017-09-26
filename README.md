@@ -55,29 +55,26 @@ There are four core concepts in Mercury:
 - **Device:** Devices are anything you can notify: a physical iOS device, an email address etc.
 - **Transport:** Transports are technologies supported for relying messages back and forth. Some
   transports have write-only capability (e.g. APNS), while some allow for two-way communication
-  (Ably, ActionCable).
+  (PubNub, ActionCable).
   
 ## 4. Transports
 
 Out of the box, Mercury supports three transports.
 
-### 4.1 Ably
+### 4.1 PubNub
 
-[Ably](https://ably.io) is the preferred transport for real-time communication and is replacing 
-ActionCable.
+[PubNub](https://www.pubnub.com/) is the preferred transport for real-time communication and is 
+replacing ActionCable.
 
 **Outgoing messages** are delivered to the `profiles:ID` channel if the recipient is a specific
 profile or to the `profile_groups:ID` channel if the recipient is a profile group.
 
-**Incoming messages** are parsed to extract the Mercury profile ID and then pushed to RabbitMQ
-where they can be consumed by any subscribers.
-
-**Authentication** happens through Ably token requests. The token requests can be sent to any
-clients that wish to connect to Ably.
+**Authentication** happens through PubNub authentication keys. The key can be sent to any clients 
+that wish to connect to PubNub.
 
 ### 4.2 ActionCable
 
-While still supported, ActionCable is being replaced by the Ably transport due to its unreliability.
+While still supported, ActionCable is being replaced by the PubNub transport due to its unreliability.
 
 When clients connect, they are automatically subscribed to their profile's channel and to the
 channel of each profile group they belong to.
