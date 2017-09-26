@@ -7,7 +7,6 @@ module Mercury
         step :deliver!
 
         def deliver!(params:, **)
-          return if ENV['DISABLE_PUBNUB'] == 'true'
           Client.publish(
             channel: channel_for(params[:notification]),
             message: {
@@ -17,6 +16,8 @@ module Mercury
           ) do |envelope|
             Rails.logger.debug envelope.status
           end
+        rescue ThreadError => e
+          Rails.logger.error e.inspect
         end
 
         private

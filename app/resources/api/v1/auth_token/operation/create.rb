@@ -8,7 +8,6 @@ module API
           step :grant_pubnub_access!
 
           def grant_pubnub_access!(model:, **)
-            return if ENV['DISABLE_PUBNUB'] == 'true'
             Mercury::Transport::Pubnub::Client.grant(
               channels: model.pubnub_channels,
               read: true,
@@ -16,6 +15,8 @@ module API
               ttl: 0,
               authKeys: [model.token]
             )
+          rescue ThreadError => e
+            Rails.logger.error e.inspect
           end
         end
       end
