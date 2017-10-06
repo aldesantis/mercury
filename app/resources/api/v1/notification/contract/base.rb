@@ -34,6 +34,9 @@ module API
 
               optional(:action_cable).schema do
               end
+
+              optional(:pubnub).schema do
+              end
             end
             optional(:meta).maybe(:hash?)
 

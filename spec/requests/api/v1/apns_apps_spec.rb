@@ -13,7 +13,7 @@ RSpec.describe '/api/v1/apns-apps' do
 
     it 'responds with the APNS apps' do
       subject.call
-      expect(parsed_response).to match_array([
+      expect(parsed_response['data']).to match_array([
         a_hash_including('id' => apns_app.id)
       ])
     end
