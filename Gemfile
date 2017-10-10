@@ -41,6 +41,9 @@ gem 'tzinfo-data'
 # Pubnub
 gem 'pubnub'
 
+# Redis / ActionCable
+gem 'redis'
+
 group :production do
   # Heroku
   gem 'rails_12factor'

@@ -389,6 +389,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.1.0)
   rails_12factor
+  redis
   rpush
   rspec-rails
   rspec_junit_formatter
