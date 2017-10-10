@@ -26,6 +26,7 @@ jobs:
         key: mercury-{{ checksum "Gemfile.lock" }}
         paths:
           - vendor/bundle
+      - run: cp config/application.example.yml config/application.yml
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
