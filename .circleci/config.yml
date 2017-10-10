@@ -1,0 +1,61 @@
+version: 2
+
+jobs:
+  build:
+    parallelism: 2
+    docker:
+      - image: ruby:2.4.2
+        environment:
+          - PG_HOST=localhost
+          - PG_USER=ubuntu
+          - RAILS_ENV=test
+          - RACK_ENV=test
+          - DATABASE_URL=postgres://ubuntu@localhost:5432/mercury
+      - image: postgres
+        environment:
+          - POSTGRES_USER=ubuntu
+          - POSTGRES_DB=mercury
+      - image: redis
+    steps:
+      # Setup
+      - checkout
+      - type: cache-restore
+        key: mercury-{{ checksum "Gemfile.lock" }}
+      - run: bundle check --path vendor/bundle || bundle install --path vendor/bundle
+      - type: cache-save
+        key: mercury-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+
+      # Testing
+      - type: shell
+        command: |
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      - type: store_test_results
+        path: /tmp/test-results
+
+      # Deployment
+      - run: bash .circleci/setup-heroku.sh
+      - add_ssh_keys:
+          fingerprints:
+            - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
+      - deploy:
+          name: Deploy to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git push heroku-production master
+            fi
+
+            if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+              git push heroku-staging staging:master
+            fi
+
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              git push heroku-dev develop:master
+            fi
