@@ -258,7 +258,7 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    redis (4.0.1)
+    redis (3.3.5)
     reform (2.2.4)
       disposable (>= 0.4.1)
       representable (>= 2.4.0, < 3.1.0)
@@ -389,7 +389,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.1.0)
   rails_12factor
-  redis
+  redis (~> 3.0)
   rpush
   rspec-rails
   rspec_junit_formatter

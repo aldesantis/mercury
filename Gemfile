@@ -41,8 +41,8 @@ gem 'tzinfo-data'
 # Pubnub
 gem 'pubnub'
 
-# Redis / ActionCable
-gem 'redis'
+# ActionCable
+gem 'redis', '~> 3.0' # https://github.com/rails/rails/issues/30527
 
 group :production do
   # Heroku
