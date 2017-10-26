@@ -95,7 +95,7 @@ APNS is a bit different from the other transports, because it requires for each 
 to be configured and for its certificate to be imported. It also requires that each profile has
 a device in order to send notification to the appropriate APNS tokens.
 
-Mercury comes out of the box with the sandbox and production certificates for the Batteries 911
+Mercury comes out of the box with the sandbox and production certificates for the Batteries911
 iOS apps. They can be imported with a Rake task:
 
 ```console

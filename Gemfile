@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.1'
+ruby '2.4.2'
 
 # Ruby on Rails
 gem 'rails', '~> 5.1.0'
@@ -17,12 +17,7 @@ gem 'figaro'
 gem 'rack-cors'
 
 # API
-gem 'pragma-rails', github: 'pragmarb/pragma-rails'
-gem 'pragma', github: 'pragmarb/pragma'
-gem 'pragma-decorator', github: 'pragmarb/pragma-decorator'
-gem 'pragma-policy', github: 'pragmarb/pragma-policy'
-gem 'pragma-contract', github: 'pragmarb/pragma-contract'
-gem 'pragma-operation', github: 'pragmarb/pragma-operation'
+gem 'pragma-rails'
 
 # Background jobs
 gem 'sidekiq'
@@ -45,6 +40,9 @@ gem 'tzinfo-data'
 
 # Pubnub
 gem 'pubnub'
+
+# ActionCable
+gem 'redis', '~> 3.0' # https://github.com/rails/rails/issues/30527
 
 group :production do
   # Heroku
