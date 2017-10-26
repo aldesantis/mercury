@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :notification do
     association :recipient, factory: :profile_group
     text { Faker::Lorem.sentence }
@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     trait :apns do
       transient do
-        apns_app { FactoryGirl.create(:apns_app) }
+        apns_app { FactoryBot.create(:apns_app) }
       end
 
       transports do

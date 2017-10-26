@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :apns_app do
     sequence(:name) { |n| "apns_app_#{n}" }
     environment 'development'
