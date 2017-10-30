@@ -15,8 +15,6 @@ module API
               ttl: 0,
               authKeys: [model.token]
             )
-          rescue ThreadError => e
-            Rails.logger.error e.inspect
           end
         end
       end
