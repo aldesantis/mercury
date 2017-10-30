@@ -39,7 +39,7 @@ gem 'bunny'
 gem 'tzinfo-data'
 
 # Pubnub
-gem 'pubnub'
+gem 'pubnub', '4.0.23'
 
 # ActionCable
 gem 'redis', '~> 3.0' # https://github.com/rails/rails/issues/30527
