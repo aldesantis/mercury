@@ -16,8 +16,6 @@ module Mercury
           ) do |envelope|
             Rails.logger.debug envelope.status
           end
-        rescue ThreadError => e
-          Rails.logger.error e.inspect
         end
 
         private

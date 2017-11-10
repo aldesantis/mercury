@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :device do
     transient do
-      apns_app { FactoryGirl.create(:apns_app) }
+      apns_app { FactoryBot.create(:apns_app) }
     end
 
     association :profile

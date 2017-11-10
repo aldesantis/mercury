@@ -39,7 +39,7 @@ gem 'bunny'
 gem 'tzinfo-data'
 
 # Pubnub
-gem 'pubnub'
+gem 'pubnub', '4.0.23' # https://stackoverflow.com/q/46739303/705588
 
 # ActionCable
 gem 'redis', '~> 3.0' # https://github.com/rails/rails/issues/30527
@@ -51,13 +51,13 @@ group :production do
   # Throttling
   gem 'rack-attack'
 
-  # Monitoring
+  # MonitoringF
   gem 'scout_apm'
 end
 
 group :development, :test do
   # Factories
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
 
   # Debugging
