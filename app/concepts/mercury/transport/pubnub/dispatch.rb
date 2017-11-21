@@ -7,6 +7,7 @@ module Mercury
         step :deliver!
 
         def deliver!(params:, **)
+          return false unless channel_for(params[:notification])
           Client.publish(
             channel: channel_for(params[:notification]),
             message: {
@@ -26,6 +27,8 @@ module Mercury
             "profiles:#{notification.recipient.id}"
           when ::ProfileGroup
             "profile_groups:#{notification.recipient.id}"
+          when nil
+            notification.transports.with_indifferent_access.dig('pubnub', 'channel')
           end
         end
       end
