@@ -32,4 +32,28 @@ RSpec.describe Mercury::Transport::Pubnub::Dispatch do
       result
     end
   end
+
+  context 'when notification is for channel' do
+    let(:transports) do
+      {
+        pubnub: {
+          channel: channel_name
+        }
+      }
+    end
+
+    let(:notification) do
+      create(:notification, recipient: nil, transports: transports)
+    end
+
+    let(:channel_name) { 'test_channel' }
+
+    it 'publishes to the channel name' do
+      expect(Mercury::Transport::Pubnub::Client).to receive(:publish)
+        .with(channel: 'test_channel', message: an_instance_of(Hash))
+        .once
+
+      result
+    end
+  end
 end
