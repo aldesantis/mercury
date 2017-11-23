@@ -42,7 +42,7 @@ jobs:
       - type: store_test_results
         path: /tmp/test-results
 
-      # Deployment
+      # Heroku Deployment
       - run: bash .circleci/setup-heroku.sh
       - add_ssh_keys:
           fingerprints:
@@ -60,4 +60,14 @@ jobs:
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               git push heroku-dev develop:master
+            fi
+
+      # EB Deployment
+      - run: bash .circleci/setup-eb.sh
+      - run: sudo pip install awsebcli
+      - deploy:
+          name: Deploy to EB
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              eb deploy develop
             fi
