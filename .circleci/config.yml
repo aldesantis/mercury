@@ -63,11 +63,14 @@ jobs:
             fi
 
       # EB Deployment
-      - run: bash .circleci/setup-eb.sh
-      - run: pip install awsebcli
       - deploy:
           name: Deploy to EB
           command: |
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              bash .circleci/setup-eb.sh
+              apt-get -y -qq update
+              apt-get -y -qq install python3.4-dev
+              curl -O https://bootstrap.pypa.io/get-pip.py
+              python3.4 get-pip.py --user
               eb deploy develop
             fi
