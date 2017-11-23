@@ -1,8 +1,28 @@
-version: 2
+version: 2.0
 
 jobs:
-  build:
-    parallelism: 2
+  bundle_dependencies:
+    working_directory: ~/mercury
+    docker:
+      - image: ruby:2.4.2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mercury
+      - type: cache-restore
+        key: mercury-{{ checksum "Gemfile.lock" }}
+      - run: bundle check --path vendor/bundle || bundle install --path vendor/bundle
+      - type: cache-save
+        key: mercury-{{ checksum "Gemfile.lock" }}
+        paths:
+          - ~/mercury/vendor/bundle
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor/bundle
+
+  test:
+    working_directory: ~/mercury
     docker:
       - image: ruby:2.4.2
         environment:
@@ -17,20 +37,13 @@ jobs:
           - POSTGRES_DB=mercury
       - image: redis
     steps:
-      # Setup
       - checkout
-      - type: cache-restore
-        key: mercury-{{ checksum "Gemfile.lock" }}
-      - run: bundle check --path vendor/bundle || bundle install --path vendor/bundle
-      - type: cache-save
-        key: mercury-{{ checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
+      - attach_workspace:
+          at: ~/mercury
+      - run: bundle --path vendor/bundle
       - run: cp config/application.example.yml config/application.yml
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-
-      # Testing
       - type: shell
         command: |
           bundle exec rspec --profile 10 \
@@ -42,7 +55,14 @@ jobs:
       - type: store_test_results
         path: /tmp/test-results
 
-      # Heroku Deployment
+  heroku_deploy:
+    working_directory: ~/mercury
+    docker:
+      - image: ruby:2.4.2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mercury
       - run: bash .circleci/setup-heroku.sh
       - add_ssh_keys:
           fingerprints:
@@ -62,7 +82,14 @@ jobs:
               git push heroku-dev develop:master
             fi
 
-      # EB Deployment
+  eb_deploy:
+    working_directory: ~/mercury
+    docker:
+      - image: ruby:2.4.2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mercury
       - deploy:
           name: Deploy to EB
           command: |
@@ -75,3 +102,30 @@ jobs:
               pip install awsebcli
               eb deploy develop
             fi
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - bundle_dependencies
+      - test:
+          requires:
+            - bundle_dependencies
+      - heroku_deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+      - eb_deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
