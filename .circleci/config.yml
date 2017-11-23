@@ -64,7 +64,7 @@ jobs:
 
       # EB Deployment
       - run: bash .circleci/setup-eb.sh
-      - run: sudo pip install awsebcli
+      - run: pip install awsebcli
       - deploy:
           name: Deploy to EB
           command: |
