@@ -68,9 +68,9 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               bash .circleci/setup-eb.sh
-              apt-get update -y -qq
+              apt-get update -qq
               apt-get upgrade -y -qq
-              apt-get install python-pip
+              apt-get install -y python-pip
               pip install ebcli
               eb deploy develop
             fi
