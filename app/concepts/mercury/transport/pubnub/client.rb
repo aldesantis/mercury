@@ -29,7 +29,7 @@ module Mercury
             publish_key: ENV.fetch('PUBNUB_PUBLISH_KEY'),
             secret_key: ENV.fetch('PUBNUB_SECRET_KEY'),
             ssl: true,
-            logger: logger,
+            logger: logger
           )
 
           __setobj__ @client
