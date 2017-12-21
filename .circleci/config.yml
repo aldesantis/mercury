@@ -78,6 +78,10 @@ jobs:
               git push heroku-staging staging:master
             fi
 
+            if [ "${CIRCLE_BRANCH}" == "release" ]; then
+              git push heroku-release release:master
+            fi
+
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               git push heroku-dev develop:master
             fi
@@ -118,6 +122,7 @@ workflows:
             branches:
               only:
                 - develop
+                - release
                 - staging
                 - master
       - eb_deploy:
