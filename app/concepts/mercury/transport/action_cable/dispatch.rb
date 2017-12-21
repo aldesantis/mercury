@@ -7,6 +7,7 @@ module Mercury
         step :deliver!
 
         def deliver!(params:, **)
+          return false unless channel_for(params[:notification])
           channel_for(params[:notification]).broadcast_to(
             params[:notification].recipient,
             text: params[:notification].text,

@@ -1,8 +1,28 @@
-version: 2
+version: 2.0
 
 jobs:
-  build:
-    parallelism: 2
+  bundle_dependencies:
+    working_directory: ~/mercury
+    docker:
+      - image: ruby:2.4.2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mercury
+      - type: cache-restore
+        key: mercury-{{ checksum "Gemfile.lock" }}
+      - run: bundle check --path vendor/bundle || bundle install --path vendor/bundle
+      - type: cache-save
+        key: mercury-{{ checksum "Gemfile.lock" }}
+        paths:
+          - ~/mercury/vendor/bundle
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor/bundle
+
+  test:
+    working_directory: ~/mercury
     docker:
       - image: ruby:2.4.2
         environment:
@@ -17,35 +37,36 @@ jobs:
           - POSTGRES_DB=mercury
       - image: redis
     steps:
-      # Setup
       - checkout
-      - type: cache-restore
-        key: mercury-{{ checksum "Gemfile.lock" }}
-      - run: bundle check --path vendor/bundle || bundle install --path vendor/bundle
-      - type: cache-save
-        key: mercury-{{ checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
+      - attach_workspace:
+          at: ~/mercury
+      - run: bundle --path vendor/bundle
       - run: cp config/application.example.yml config/application.yml
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-
-      # Testing
       - type: shell
         command: |
           bundle exec rspec --profile 10 \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
+                            --no-color \
                             $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
       - type: store_test_results
         path: /tmp/test-results
 
-      # Deployment
+  heroku_deploy:
+    working_directory: ~/mercury
+    docker:
+      - image: ruby:2.4.2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mercury
       - run: bash .circleci/setup-heroku.sh
       - add_ssh_keys:
           fingerprints:
-            - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
+            - "31:50:dd:6a:cd:48:95:23:30:41:8a:d0:08:de:15:99"
       - deploy:
           name: Deploy to Heroku
           command: |
@@ -60,3 +81,51 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               git push heroku-dev develop:master
             fi
+
+  eb_deploy:
+    working_directory: ~/mercury
+    docker:
+      - image: ruby:2.4.2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/mercury
+      - deploy:
+          name: Deploy to EB
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+              bash .circleci/setup-eb.sh
+              apt-get update -qq
+              apt-get upgrade -y -qq
+              apt-get install -y python-dev python-pip
+              easy_install --upgrade six
+              pip install awsebcli
+              eb deploy develop
+            fi
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - bundle_dependencies
+      - test:
+          requires:
+            - bundle_dependencies
+      - heroku_deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+      - eb_deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
