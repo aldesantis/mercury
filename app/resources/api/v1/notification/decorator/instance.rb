@@ -10,7 +10,7 @@ module API
 
           property :id
           property :recipient_type, exec_context: :decorator
-          property :recipient_id
+          property :recipient_id, render_nil: true
           property :text
           property :meta
           property :transports
@@ -18,7 +18,7 @@ module API
           timestamp :updated_at
 
           def recipient_type
-            represented.recipient_type.underscore
+            represented.recipient_type&.underscore
           end
         end
       end

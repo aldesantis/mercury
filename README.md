@@ -54,8 +54,8 @@ There are four core concepts in Mercury:
   for profile groups is to group users by role (admin, regular user etc.)
 - **Device:** Devices are anything you can notify: a physical iOS device, an email address etc.
 - **Transport:** Transports are technologies supported for relying messages back and forth. Some
-  transports have write-only capability (e.g. APNS), while some allow for two-way communication
-  (PubNub, ActionCable).
+  transports have write-only capability (e.g. APNS, PubNub), while some allow for two-way 
+  communication (ActionCable).
   
 ## 4. Transports
 

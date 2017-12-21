@@ -72,6 +72,28 @@ RSpec.describe '/api/v1/notifications' do
       subject.call
     end
 
+    context 'when recipient is nil' do
+      let(:notification) do
+        attributes_for(:notification).merge(
+          recipient: nil,
+          transports: {
+            pubnub: {
+              channel: 'test_channel'
+            }
+          }
+        )
+      end
+
+      it 'responds with 201 Created' do
+        subject.call
+        expect(last_response.status).to eq(201)
+      end
+
+      it 'creates a new notification' do
+        expect(subject).to change(Notification, :count).by(1)
+      end
+    end
+
     context 'with the APNS transport' do
       let(:notification) do
         attributes_for(:notification, :apns).merge(

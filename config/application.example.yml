@@ -3,8 +3,10 @@ CORS_ORIGINS: '*'
 HOST: example.com
 PROTOCOL: https
 MAIL_SENDER: noreply@example.com
-SENDGRID_USERNAME: YourSendgridUsername
-SENDGRID_PASSWORD: YourSendgridPassword
+SMTP_ADDRESS: smtp.mandrillapp.com
+SMTP_DOMAIN: batteries911.com
+SMTP_PASSWORD: mandrill_api_key
+SMTP_USERNAME: mandrill_username
 MAIL_DOMAIN: example.com
 BUGSNAG_API_KEY: YourApiKey
 BUGSNAG_RELEASE_STAGE: development

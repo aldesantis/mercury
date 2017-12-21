@@ -16,7 +16,8 @@ module API
               def self.messages
                 super.merge(en: {
                   errors: {
-                    recipient_id: 'must be a valid recipient ID'
+                    recipient_id: 'must be a valid recipient ID',
+                    type: 'one of channel_name or recipient allowed'
                   }
                 })
               end
@@ -24,8 +25,8 @@ module API
               predicates API::V1::Common::Contract::Predicates
             end
 
-            required(:recipient_type).filled(included_in?: %w[Profile ProfileGroup])
-            required(:recipient_id).filled
+            required(:recipient_type).maybe(included_in?: %w[Profile ProfileGroup Channel])
+            required(:recipient_id).maybe
             required(:text).filled
             required(:transports).schema do
               optional(:apns).schema do
@@ -44,7 +45,8 @@ module API
               recipient_type
               recipient_id
             ]) do |recipient_type, recipient_id|
-              "::#{recipient_type}".constantize.exists?(id: recipient_id)
+              (!recipient_type && !recipient_id) ||
+                "::#{recipient_type}".constantize.exists?(id: recipient_id)
             end
           end
 
