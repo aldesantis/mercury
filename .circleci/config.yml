@@ -4,7 +4,7 @@ jobs:
   bundle_dependencies:
     working_directory: ~/mercury
     docker:
-      - image: ruby:2.4.2
+      - image: ruby:2.5.0
     steps:
       - checkout
       - attach_workspace:
@@ -24,7 +24,7 @@ jobs:
   test:
     working_directory: ~/mercury
     docker:
-      - image: ruby:2.4.2
+      - image: ruby:2.5.0
         environment:
           - PG_HOST=localhost
           - PG_USER=ubuntu
@@ -58,7 +58,7 @@ jobs:
   heroku_deploy:
     working_directory: ~/mercury
     docker:
-      - image: ruby:2.4.2
+      - image: ruby:2.5.0
     steps:
       - checkout
       - attach_workspace:
@@ -89,7 +89,7 @@ jobs:
   eb_deploy:
     working_directory: ~/mercury
     docker:
-      - image: ruby:2.4.2
+      - image: ruby:2.5.0
     steps:
       - checkout
       - attach_workspace:
