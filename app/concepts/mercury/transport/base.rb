@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'trailblazer/dsl'
+
 module Mercury
   module Transport
     class Base < Trailblazer::Operation
