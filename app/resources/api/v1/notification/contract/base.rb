@@ -51,7 +51,7 @@ module API
           end
 
           def recipient_type=(val)
-            super val.camelcase
+            super val&.camelcase
           end
         end
       end
