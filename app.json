@@ -1,0 +1,113 @@
+{
+  "name": "mercury",
+  "description": "Mercury backend app.json config",
+  "scripts": {},
+  "env": {
+    "ACTIONCABLE_REQUEST_ORIGINS": {
+      "required": true
+    },
+    "BUGSNAG_API_KEY": {
+      "required": true
+    },
+    "BUGSNAG_RELEASE_STAGE": {
+      "required": true
+    },
+    "CORS_ORIGINS": {
+      "required": true
+    },
+    "HOST": {
+      "required": true
+    },
+    "LANG": {
+      "required": true
+    },
+    "LOG_LEVEL": {
+      "required": true
+    },
+    "MAIL_DOMAIN": {
+      "required": true
+    },
+    "MAIL_SENDER": {
+      "required": true
+    },
+    "PROTOCOL": {
+      "required": true
+    },
+    "PUBNUB_PUBLISH_KEY": {
+      "required": true
+    },
+    "PUBNUB_SECRET_KEY": {
+      "required": true
+    },
+    "PUBNUB_SUBSCRIBE_KEY": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "REDIS_PROVIDER": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "generator": "secret"
+    },
+    "SENDGRID_PASSWORD": {
+      "required": true
+    },
+    "SENDGRID_USERNAME": {
+      "required": true
+    },
+    "SMTP_ADDRESS": {
+      "required": true
+    },
+    "SMTP_DOMAIN": {
+      "required": true
+    },
+    "SMTP_PASSWORD": {
+      "required": true
+    },
+    "SMTP_USERNAME": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "hobby"
+    },
+    "worker": {
+      "quantity": 0,
+      "size": "hobby"
+    },
+    "rpush": {
+      "quantity": 1,
+      "size": "hobby"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.6"
+      }
+    },
+    "redistogo"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
