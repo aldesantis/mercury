@@ -5,7 +5,7 @@ module API
     module ProfileGroup
       module Operation
         class Destroy < Pragma::Operation::Destroy
-          step :check_dependencies!, before: :destroy!, fail_fast: true
+          step :check_dependencies!, before: 'destroy', fail_fast: true
 
           def check_dependencies!(options)
             return true if options['model'].profiles.empty?
