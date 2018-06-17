@@ -2,6 +2,6 @@
 
 class HealthController < ApplicationController
   def show
-    head :no_content
+    render json: { status: :ok }
   end
 end
