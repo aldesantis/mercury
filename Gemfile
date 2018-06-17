@@ -19,6 +19,7 @@ gem 'rack-cors'
 # API
 gem 'pragma-rails'
 gem 'pragma-contract', '>= 2.0.1'
+gem 'kaminari'
 
 # Background jobs
 gem 'sidekiq'
